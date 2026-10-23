@@ -1,0 +1,14 @@
+# Public Release Policy
+
+1. **Separation:** the public `jjj0214/FileTransfer-Releases` repository contains distribution guidance and approved release assets only; never mirror or push private source history, credentials, internal logs, customer configuration, package build directories, or signing keys.
+2. **Versioning:** create a stable release `vX.Y.Z`, with exactly one `PIEFileTransferSlaveSetup-X.Y.Z.exe` asset. Never overwrite a published tag or asset. Pre-release and draft releases are not offered as the latest stable download.
+3. **Binary provenance:** build only from an approved, clean, synchronized protected `Develop` commit. The installer must have the exact version, expected original file name/product identity, appropriate Windows x64 architecture and the approved code-signing publisher. Compare file size/SHA-256 against the final build sidecar and published GitHub asset digest.
+4. **Code signing:** do not publish if Windows Authenticode is `NotSigned`, invalid, expired/untrusted, or if the signer thumbprint differs from the organization-approved value. Regenerate the final sidecar with `-RequireAuthenticode` *after* signing, and verify it again before publication.
+5. **Third parties:** review and document legal authorization for external redistribution (including the bundled TightVNC materials), required notices, and any applicable source/offers before publicly publishing a binary. Product ownership and distribution approval must be confirmed.
+6. **Staged publication:** create a **draft**, upload exactly the reviewed artifacts, verify remotely reported asset length/hash, and only then publish after explicit release authorization. Failure must leave the draft unpublished. Never silently repair or overwrite unexpected remote artifacts.
+7. **Immutability and access:** enable GitHub Release immutability where available. Limit public-repository write access to authorized maintainers, protect `main`, and use least-privilege GitHub credentials. Do not put tokens in scripts or source.
+8. **Independent runtime confirmation:** after publishing, query `/repos/jjj0214/FileTransfer-Releases/releases/latest` and verify that the public response contains the correct stable tag, exact asset, `sha256:` digest and browser download URL. Exercise a test Master and test Slave before field rollout.
+9. **Operations:** preserve previous releases for controlled rollback *by an administrator*; do not auto-downgrade Slave PCs. Failed internet retrieval leaves local/offline paths functional.
+10. **Scope:** this release channel is **Slave Setup only**. There is no automatic Master binary updater or Slave-originated online updater.
+
+The publisher is deliberately **fail-closed**. Missing signature, approval, manifest, authorized license review, or remote verification prevents publication.
