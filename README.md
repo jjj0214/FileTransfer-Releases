@@ -1,27 +1,30 @@
 # PIE.FileTransfer — Public installation packages
 
-This repository distributes **installation binaries only** for PIE.FileTransfer. The application source, credentials, customer-specific configuration, and development history are maintained separately in a private repository.
+This repository distributes **installation binaries only** for proprietary PIE.FileTransfer, with a separately licensed TightVNC GPL source archive accompanying the binary. PIE application source, credentials, customer configuration and development history stay private.
 
-## What is distributed
+## Stable Release assets
 
-Each stable GitHub Release uses a tag in the form `vX.Y.Z` and contains:
+Each public stable Release (tag vX.Y.Z) contains exactly four assets:
 
-- `PIEFileTransferSlaveSetup-X.Y.Z.exe` — Windows x64 Slave installer.
-- `PIEFileTransferSlaveSetup-X.Y.Z.release.json` — verified build metadata, including the actual code-signing status and SHA-256.
-- `SHA256SUMS.txt` — file hashes for administrator verification.
+- PIEFileTransferSlaveSetup-X.Y.Z.exe — Windows x64 Slave installer. Initial releases are **UNSIGNED**.
+- PIEFileTransferSlaveSetup-X.Y.Z.release.json — final product/version/size/SHA-256 and factual Authenticode status (NotSigned for unsigned builds).
+- tightvnc-2.8.90-src-gpl.zip — complete corresponding TightVNC 2.8.90 GPLv2 source.
+- SHA256SUMS.txt — SHA-256 hashes covering Setup EXE, metadata and GPL source.
 
-A Master installation may use **Update Slave Components → GitHub latest stable Release** to download a verified installer and send it to selected Slave PCs using the existing authenticated local-network update workflow. Slave PCs **do not need Internet access** and do not update themselves from GitHub.
+The installer includes the original, unmodified TightVNC 2.8.90 x64 MSI as an independently installed component. The full GPLv2 license and notices are bundled. The corresponding source ZIP is made available next to the Setup EXE in the **same GitHub Release**.
 
-Installation is a privileged operation. Downloading does not automatically deploy or install a package. Check the target PCs and version before confirming deployment.
+Official source: https://www.tightvnc.com/download/2.8.90/tightvnc-2.8.90-src-gpl.zip
 
-## Trust and redistributing packages
+## Manual installation and unsigned-binary warning
 
-Only releases passing product/version/hash/signature and distribution-authorization gates should be published. Independent publisher identity verification is different from a SHA-256 hash: hashes detect changes to bytes but do not establish publisher identity.
+Master's Update Slave Components workflow can optionally download the latest stable GitHub Release or reuse a verified cache. Slave PCs never need Internet access. Downloading alone never starts an installation.
 
-This repository grants **no additional license** to proprietary first-party software. Third-party components remain subject to their respective licenses. Any required third-party notices, source-offer obligations, and binary redistribution permissions must be reviewed and satisfied *before* making an installer public.
+**IMPORTANT: Initial Setup executables are unsigned.** GitHub SHA-256 and SHA256SUMS.txt detect byte changes but do **not independently prove publisher identity** or show that a binary is safe. Windows may display SmartScreen or Unknown Publisher warnings. Master requires explicit consent for downloaded/cached packages and separately uses its existing target-version and installation confirmation.
 
-See [RELEASE_POLICY.md](RELEASE_POLICY.md) for publication rules and [SECURITY.md](SECURITY.md) for security reporting.
+## Licensing
 
-## Offline deployment
+PIE.FileTransfer remains proprietary. TightVNC is independently redistributed under GPLv2; this does not grant the right to link GPL TightVNC source into proprietary PIE products. Other dependency licenses and the independence of the two applications must be reviewed prior to public rollout.
 
-Master also supports selecting an existing local Setup EXE and reusing previously verified cached downloads. User-provided local installation files are never deleted by the Master-managed online cache cleanup.
+See [RELEASE_POLICY.md](RELEASE_POLICY.md) and [SECURITY.md](SECURITY.md).
+
+Master also retains the offline local Setup EXE selection workflow. User-selected external local Setup files are never deleted by the online cache cleanup.
