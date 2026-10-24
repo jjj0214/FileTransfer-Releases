@@ -1,17 +1,19 @@
 # Security Policy
 
-PIE.FileTransfer is a Windows industrial PC management and Slave component deployment system. Public downloads must be treated as executable software with elevated installation effects.
+PIE.FileTransfer performs privileged Windows installation on managed equipment. Public installers must be treated as sensitive operational software.
 
 ## Reporting
 
-Please report suspected security vulnerabilities **privately** to the repository maintainers through an approved confidential channel. Do not post exploit details, credentials, internal diagnostics, or installation-token materials in public issues.
+Please report vulnerabilities privately to the maintainers through a confidential channel. Do not post credentials, tokens, exploit details or internal system configurations in public issues.
 
-## Distribution integrity
+## Unsigned Setup limitations and safeguards
 
-- Stable public Releases must include a signed and trusted Windows installer from the approved publisher, plus independently verifiable SHA-256 metadata.
-- GitHub-generated asset SHA-256 hashes help detect file changes, but alone do not attest the publisher's identity.
-- Releases should be immutable after final publication. Do not replace a published asset to fix a faulty build; produce a new version.
-- Master downloads a package only after explicit user action; Slave endpoints never connect to GitHub as part of the update mechanism.
-- A download does not by itself trigger remote installation. Master's existing authorized Slave preflight/confirmation and request-ID/installed-version verification remain mandatory.
+- **Initial public Slave Setup releases may be unsigned.** The sidecar and release notes must identify the actual status as NotSigned/UNSIGNED without implying a verified code-signing publisher.
+- GitHub-provided SHA-256 and SHA256SUMS.txt verify bytes but do **not independently establish publisher identity or build trust**. GitHub compromise could affect both the binary and its published checksum.
+- The unsigned path requires an explicit publish-time acknowledgment and a separate Draft-to-Publish approval, plus exact version, file size, actual Authenticode status, final sidecar, and matching remote SHA-256 checks.
+- Master requires consent before an online/cached Setup is used, followed by the existing authenticated LAN transfer and Slave installation confirmation. Slave endpoints never download packages directly from GitHub.
+- Avoid disabling SmartScreen or antivirus as an installation workaround. An unknown publisher warning can appear for unsigned installers.
+- TightVNC's independent original 2.8.90 MSI is distributed under GPLv2 with full license and notices. Its matching GPL source ZIP must be alongside the binary in the same immutable public Release.
+- Never replace an immutable released asset. Publish a new version if a mistake needs correction.
 
-If publication prerequisites are not satisfied, use controlled LAN delivery from a known local Setup EXE instead of issuing an unverified public binary.
+Independent Windows publisher authentication is not supplied by an unsigned release, even when an asset digest matches.
