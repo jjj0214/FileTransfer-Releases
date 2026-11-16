@@ -8,7 +8,7 @@ Please report vulnerabilities privately to the maintainers through a confidentia
 
 ## Unsigned Setup limitations and safeguards
 
-- **Initial public Slave Setup releases may be unsigned.** The sidecar and release notes must identify the actual status as NotSigned/UNSIGNED without implying a verified code-signing publisher.
+- **Public Master and Slave Setup releases may be unsigned.** The sidecar and release notes must identify the actual status as NotSigned/UNSIGNED without implying a verified code-signing publisher.
 - GitHub-provided SHA-256 and SHA256SUMS.txt verify bytes but do **not independently establish publisher identity or build trust**. GitHub compromise could affect both the binary and its published checksum.
 - The unsigned path requires an explicit publish-time acknowledgment and a separate Draft-to-Publish approval, plus exact version, file size, actual Authenticode status, final sidecar, and matching remote SHA-256 checks.
 - Master requires consent before an online/cached Setup is used, followed by the existing authenticated LAN transfer and Slave installation confirmation. Slave endpoints never download packages directly from GitHub.
